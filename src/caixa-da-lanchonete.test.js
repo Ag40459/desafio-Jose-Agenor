@@ -42,10 +42,65 @@ describe('CaixaDaLanchonete', () => {
         validaTeste(formaDePagamento, resultadoEsperado, itens));
 
     test.each([
+        ['dinheiro', 'R$ 9,03', ['combo1,1']],
+        ['credito', 'R$ 9,79', ['combo1,1']],
+        ['debito', 'R$ 9,50', ['combo1,1']],
+        ['debito', 'R$ 28,50', ['combo1,3']],
+        ['dinheiro', 'Item extra não pode ser pedido sem o principal', ['cafe,1', 'queijo,1']],
+        ['credito', 'R$ 24,21', ['cafe,2', 'sanduiche,1', 'combo1,1', 'chantily,1']],
+        ['boleto', 'Forma de pagamento inválida!', ['cafe,1']],
+    ])('compra %p deve resultar em %p', validaTeste);
+
+    test.each([
         ['chantily', 'dinheiro', 'Item extra não pode ser pedido sem o principal', ['chantily,1']],
         ['queijo', 'credito', 'Item extra não pode ser pedido sem o principal', ['queijo,1']],
         ['chantily com outro item', 'credito', 'Item extra não pode ser pedido sem o principal', ['chantily,1', 'sanduiche,1']],
         ['queijo com outro item', 'debito', 'Item extra não pode ser pedido sem o principal', ['cafe,1', 'queijo,1']],
     ])('compra %p em %p deve resultar em %p', (_, formaDePagamento, resultadoEsperado, itens) =>
         validaTeste(formaDePagamento, resultadoEsperado, itens));
+
+        test.each([
+            ['dinheiro', 'R$ 9,03', ['combo1,1']],
+            ['credito', 'R$ 9,79', ['combo1,1']],
+            ['debito', 'R$ 9,50', ['combo1,1']],
+            ['debito', 'R$ 28,50', ['combo1,3']],
+            ['dinheiro', 'Item extra não pode ser pedido sem o principal', ['cafe,1', 'queijo,1']],
+            ['dinheiro', 'R$ 6,17', ['cafe,1', 'queijo,1','chantily,1']],
+            ['dinheiro', 'Item extra não pode ser pedido sem o principal', [ 'queijo,1','chantily,1']],
+            ['dinheiro', 'Item extra não pode ser pedido sem o principal', ['cafe,1', 'queijo,3',]],
+            ['boleto', 'Forma de pagamento inválida!', ['cafe,1']],
+            ['dinheiro', 'Item extra não pode ser pedido sem o principal', ['chantily,1']],
+            ['credito', 'Item extra não pode ser pedido sem o principal', ['queijo,1']],
+            ['credito', 'Item extra não pode ser pedido sem o principal', ['chantily,1', 'sanduiche,1']],
+            ['debito', 'Item extra não pode ser pedido sem o principal', ['cafe,1', 'queijo,1']],
+        ])('compra %p deve resultar em %p', validaTeste);
+
+        test.each([
+            ['dinheiro', 'R$ 9,03', ['combo1,1']],
+            ['credito', 'R$ 9,79', ['combo1,1']],
+            ['debito', 'R$ 9,50', ['combo1,1']],
+            ['debito', 'R$ 28,50', ['combo1,3']],
+            ['dinheiro', 'R$ 4,27', ['cafe,1', 'chantily,1']],
+            ['dinheiro', 'Item extra não pode ser pedido sem o principal', ['cafe,1', 'queijo,1']],
+            ['credito', 'R$ 24,21', ['cafe,2', 'sanduiche,1', 'combo1,1', 'chantily,1']],
+            ['boleto', 'Forma de pagamento inválida!', ['cafe,1']],
+            ['dinheiro', 'Item extra não pode ser pedido sem o principal', ['chantily,1']],
+            ['credito', 'Item extra não pode ser pedido sem o principal', ['queijo,1']],
+            ['credito', 'Item extra não pode ser pedido sem o principal', ['chantily,1', 'sanduiche,1']],
+            ['debito', 'Item extra não pode ser pedido sem o principal', ['cafe,1', 'queijo,1']],
+            ['dinheiro', 'R$ 10,92', ['sanduiche,1', 'cafe,1', 'queijo,1']],
+            ['credito', 'R$ 11,85', ['sanduiche,1', 'cafe,1', 'queijo,1']],
+            ['debito', 'R$ 11,50', ['sanduiche,1', 'cafe,1', 'queijo,1']],
+            ['dinheiro', 'R$ 10,45', ['sanduiche,1', 'cafe,1', 'chantily,1']],
+            ['credito', 'R$ 11,33', ['sanduiche,1', 'cafe,1', 'chantily,1']],
+            ['debito', 'R$ 11,00', ['sanduiche,1', 'cafe,1', 'chantily,1']],
+            ['dinheiro', 'R$ 17,10', ['combo1,1', 'sanduiche,1', 'queijo,1']],
+            ['credito', 'R$ 18,54', ['combo1,1', 'sanduiche,1', 'queijo,1']],
+            ['debito', 'R$ 18,00', ['combo1,1', 'sanduiche,1', 'queijo,1']],
+            ['dinheiro', 'R$ 9,97', ['combo2,1', 'cafe,1']],
+            ['credito', 'R$ 10,81', ['combo2,1', 'cafe,1']],
+            ['debito', 'R$ 10,50', ['combo2,1', 'cafe,1']],
+        ])('compra %p deve resultar em %p', validaTeste);
+        
+        
 });
